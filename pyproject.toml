@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "dspy-system-admin"
+version = "0.1.0"
+description = "DSPy-based system admin agent for network recovery"
+authors = ["Tom Doerr"]
+license = "MIT"
+packages = [{ include = "sysadmin" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+dspy-ai = ">=2.4.0"
+litellm = ">=1.35.0"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=7.4.0"
+
+[tool.poetry.scripts]
+sysadmin = "sysadmin.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"

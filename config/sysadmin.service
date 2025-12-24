@@ -1,0 +1,14 @@
+[Unit]
+Description=DSPy System Admin - WiFi Monitor
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/sysadmin daemon --interface wlP9s9
+Restart=on-failure
+RestartSec=30
+Environment=HOME=/home/tom
+Environment=OLLAMA_HOST=http://localhost:11434
+
+[Install]
+WantedBy=default.target

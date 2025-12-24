@@ -1,0 +1,13 @@
+[Unit]
+Description=WiFi Network Watchdog
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m sysadmin.watchdog
+WorkingDirectory=/home/tom/git/dspy_system_admin
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

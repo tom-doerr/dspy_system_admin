@@ -1,0 +1,9 @@
+# DSPy System Admin - Minimal sudo privileges
+# Install: sudo cp sysadmin.sudoers /etc/sudoers.d/sysadmin
+# Permissions: sudo chmod 440 /etc/sudoers.d/sysadmin
+
+Cmnd_Alias SYSADMIN_WIFI = \
+    /usr/sbin/ip link set wlP9s9 down, \
+    /usr/sbin/ip link set wlP9s9 up
+
+tom ALL=(root) NOPASSWD: SYSADMIN_WIFI
