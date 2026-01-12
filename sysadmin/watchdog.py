@@ -12,6 +12,7 @@ DEFAULT_INTERFACE = "wlP9s9"
 DEFAULT_INTERVAL = 10
 DEFAULT_FAILURES = 3
 DEFAULT_COOLDOWN = 60
+DEFAULT_POST_RESET_SLEEP = 10
 
 
 def ping(host: str, timeout: int = 2) -> bool:
@@ -44,7 +45,7 @@ def reset_wifi(iface: str) -> bool:
         return False
 
 
-def run(gateway: str, iface: str, interval: int, max_failures: int, cooldown: int):
+def run(gateway: str, iface: str, interval: int, max_failures: int, cooldown: int, post_reset_sleep: int):
     """Main watchdog loop."""
     failures = 0
     last_reset = 0
@@ -67,7 +68,7 @@ def run(gateway: str, iface: str, interval: int, max_failures: int, cooldown: in
                         log.info("Reset complete")
                         last_reset = now
                         failures = 0
-                        time.sleep(10)
+                        time.sleep(post_reset_sleep)
                 else:
                     remain = int(cooldown - (now - last_reset))
                     log.info(f"Cooldown active, {remain}s remaining")
@@ -82,13 +83,14 @@ def main():
     ap.add_argument("--interval", type=int, default=DEFAULT_INTERVAL)
     ap.add_argument("--failures", type=int, default=DEFAULT_FAILURES)
     ap.add_argument("--cooldown", type=int, default=DEFAULT_COOLDOWN)
+    ap.add_argument("--post-reset-sleep", type=int, default=DEFAULT_POST_RESET_SLEEP)
     args = ap.parse_args()
 
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s: %(message)s"
     )
-    run(args.gateway, args.interface, args.interval, args.failures, args.cooldown)
+    run(args.gateway, args.interface, args.interval, args.failures, args.cooldown, args.post_reset_sleep)
 
 
 if __name__ == "__main__":
