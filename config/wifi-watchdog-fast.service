@@ -1,0 +1,13 @@
+[Unit]
+Description=WiFi Network Watchdog (Fast Recovery)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m sysadmin.watchdog --interval 1 --failures 2 --cooldown 20 --post-reset-sleep 3
+WorkingDirectory=/home/tom/git/dspy_system_admin
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
